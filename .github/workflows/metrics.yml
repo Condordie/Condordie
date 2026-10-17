@@ -11,46 +11,44 @@ jobs:
   github-metrics:
     runs-on: ubuntu-latest
     steps:
+      # Columna izquierda: perfil, actividad, repos y hábitos de código
       - uses: lowlighter/metrics@latest
         with:
           token: ${{ secrets.METRICS_TOKEN }}
-          filename: github-metrics.svg
+          filename: metrics.left.svg
           template: classic
           config_timezone: America/Santiago
-          config_display: columns
           config_animations: yes
           base: header, activity, community, repositories, metadata
           repositories_forks: yes
           repositories_affiliations: owner, collaborator, organization_member
 
-          # Calendario isométrico 3D
+          plugin_habits: yes
+          plugin_habits_from: 100
+          plugin_habits_days: 30
+          plugin_habits_facts: yes
+          plugin_habits_charts: yes
+
+      # Columna derecha: PageSpeed, calendario 3D, lenguajes y logros
+      - uses: lowlighter/metrics@latest
+        with:
+          token: ${{ secrets.METRICS_TOKEN }}
+          filename: metrics.right.svg
+          template: classic
+          config_timezone: America/Santiago
+          config_animations: yes
+          base: ""
+
+          plugin_pagespeed: yes
+          plugin_pagespeed_url: https://auroradevs.cl
+          plugin_pagespeed_detailed: yes
+
           plugin_isocalendar: yes
           plugin_isocalendar_duration: full-year
 
-          # Hábitos de commits
-          plugin_habits: yes
-          plugin_habits_from: 200
-          plugin_habits_charts: true
-
-          # Lenguajes más usados
           plugin_languages: yes
           plugin_languages_sections: most-used
           plugin_languages_details: bytes-size, percentage
 
-          # Tecnologías y temas (iconos)
-          plugin_topics: yes
-          plugin_topics_mode: icons
-          plugin_topics_limit: 24
-
-          # Líneas de código, estrellas, logros y repos notables
-          plugin_lines: yes
-          plugin_stars: yes
-          plugin_stars_limit: 3
           plugin_achievements: yes
           plugin_achievements_threshold: C
-          plugin_notable: yes
-
-          # Velocidad de tu web (PageSpeed)
-          plugin_pagespeed: yes
-          plugin_pagespeed_url: https://auroradevs.cl
-          plugin_pagespeed_detailed: yes
